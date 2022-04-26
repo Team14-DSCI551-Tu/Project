@@ -1,0 +1,132 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html"><b>Home</b></a></li>
+                <li><a href="h1b.html"><b>H1B Info</b></a></li>
+                <li><a href="page.html"><b>Job List</b></a></li>
+                <li><a href="course.html"><b>Course List</b></a></li>
+                <li><a href="analysis.html"><b>H1B Analysis</b></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div>
+            <div class="panel-heading"><Center>Data Science Course List</center></div>
+          <div class="panel-body"><Center>You can find all course information below and try to find some course you need!!!</center></div>
+        </div>
+      </div>
+
+    <div class="container">
+        <div class="row">
+          <div class="col">
+            <table class="table table-bordered table-hover">
+              <tbody>
+                <tr>
+                  <td class="col-md-6">Type of Course</td>
+                  <td class="col-md-6">
+                    <div class="form-group">
+                      <select id = "course" name="Course" onchange="FetchAllData()">
+                        <option value="python">Python</option>
+                        <option value="sql">SQL</option>
+                        <option value="data_science_course">Data Science</option>
+                        <option value="Machine_Learning">Machine Learning</option>
+                        <option value="Data_Visualization">Data Visualization</option>
+                        <option value="Statistics">Statistics</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                <!-- <tr>
+                  <td colspan="2">
+                    <button type="button" onclick="FetchAllData()"> Get Course Information </button>
+                  </td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <table class="table" id = 'ex-table'>
+            <tr id="hhh">
+            </tr>
+        </table>
+    </div>
+
+    <!-- <table style="width:70%" id="ex-table">
+        <tr id="tr">
+            <th>Course</th>
+            <th>Level</th>
+            <th>Rate</th>
+            <th>Conclusion</th>
+            <th>Link</th>
+        </tr>
+    </table> -->
+
+    <title>Firebase</title>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+
+    <script id="MainScript">
+        var firebaseConfig = {
+            apiKey: "AIzaSyCh8lAAnJYcll360Mhsn7c60EW1bTJ62rc",
+            authDomain: "projectdata-2d03b.firebaseapp.com",
+            databaseURL: "https://projectdata-2d03b-default-rtdb.firebaseio.com",
+            projectId: "projectdata-2d03b",
+            storageBucket: "projectdata-2d03b.appspot.com",
+            messagingSenderId: "925975333792",
+            appId: "1:925975333792:web:eb0e21dd35d0f5761ab2c5",
+            measurementId: "G-QRPFHDK2KB"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        function FetchAllData() {
+            var input = document.getElementById('course').value;
+
+            firebase.database().ref(input).once('value', function (snapshot) {
+                if (snapshot.exists()) {
+                    var content = '';
+                    content += '<th>' + 'Course' + '</th>';
+                    content += '<th>' + 'Level' + '</th>';
+                    content += '<th>' + 'Rate' + '</th>';
+                    content += '<th>' + 'Conclusion' + '</th>';
+                    content += '<th>' + 'Link' + '</th>';
+                    snapshot.forEach(function (data) {
+                        var val = data.val();
+                        content += '<tr>';
+                        content += '<td>' + val.Course + '</td>';
+                        content += '<td>' + val.Level + '</td>';
+                        content += '<td>' + val.Rate + '</td>';
+                        content += '<td>' + val.Conclusion + '</td>';
+                        content += '<td>' + '<a href=' +val.Link+ '>' + val.Link+'</a>'+'</td>';
+                        content += '</tr>';
+                    });
+                    // $('#ex-table').append(content);
+                    document.getElementById('ex-table').innerHTML = content;
+                }
+            });
+
+        }
+        window.onload(FetchAllData());
+    </script>
+    
+</body>

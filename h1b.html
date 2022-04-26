@@ -1,0 +1,161 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li><a href="index.html"><b>Home</b></a></li>
+            <li><a href="h1b.html"><b>H1B Info</b></a></li>
+            <li><a href="page.html"><b>Job List</b></a></li>
+            <li><a href="course.html"><b>Course List</b></a></li>
+            <li><a href="analysis.html"><b>H1B Analysis</b></a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="main-wrapper" style="margin-left: 10%; margin-right: 10%;">
+    <div class="container">
+        <div>
+            <div class="panel-heading">
+                <Center id="page-title">Data Science H1B report (top 100)</center>
+            </div>
+            <div class="panel-body">
+                <Center>Relative occupation/Area H1B report for year 2021</center>
+            </div>
+        </div>
+    </div>
+
+    <div class="container2" style="width: 100%">
+        <div class="row" style="text-align: center; padding: 0; margin: 0;">
+            <div class="col">
+                <table class="table table-bordered table-hover" style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td class="col-md-6">Occupation/Area</td>
+                        <td class="col-md-6">
+                            <div class="form-group">
+                                <!-- <select id="h1b" name="H1B" onchange="FetchAllData()"> -->
+                                <select id="h1b" name="H1B" onchange="clickChangeButton(this)">
+                                    <option value="h1b_LA">[By Area] H1B in LA Area</option>
+                                    <option value="Computer_Systems_Design_and_Related_Services">
+                                        [By Occupation] Computer Systems Design and Related Services
+                                    </option>
+                                    <option value="Software_Developers_Systems_Software">
+                                        [By Occupation] Software Developers Systems Software
+                                    </option>
+                                    <option value="Computer_and_Information_Systems_management">
+                                        [By Occupation] Computer and Information Systems management
+                                    </option>
+                                    <option value="Database_Administrators">[By Occupation] Database Administrators
+                                    </option>
+                                    <option value="Computer_and_Information_Research_Scientists">
+                                        [By Occupation] Computer and Information Research Scientists
+                                    </option>
+                                    <option value="Data_Warehousing_Specialists">[By Occupation] Data Warehousing
+                                        Specialists
+                                    </option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <!--                <tr>-->
+                    <!--                    <td colspan="2">-->
+                    <!--                        <button type="button" onclick="FetchAllData()"> Get H1B Information</button>-->
+                    <!--                    </td>-->
+                    <!--                </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="text-align: center; padding: 0; margin: 0; width: 100%">
+        <table class="table" id='ex-table'>
+            <tr id="hhh">
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+
+<title>Firebase</title>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+
+<script id="MainScript">
+    var firebaseConfig = {
+        apiKey: "AIzaSyBR9y26seFnr3wyCXAQuz8thlUKKJ-LHGA",
+        authDomain: "h1b-la.firebaseapp.com",
+        databaseURL: "https://h1b-la-default-rtdb.firebaseio.com",
+        projectId: "h1b-la",
+        storageBucket: "h1b-la.appspot.com",
+        messagingSenderId: "1089185357986",
+        appId: "1:1089185357986:web:0681d06e0e4c446bd0f7fb",
+        measurementId: "G-MJXY32237R"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    let _snapshot;
+
+    function FetchAllData() {
+        var input = document.getElementById('h1b').value;
+
+        firebase.database().ref(input).once('value', function (snapshot) {
+            this._snapshot = snapshot;
+            reloadTable(this._snapshot);
+        });
+    }
+
+    function reloadTable(snapshot) {
+        if (snapshot.exists()) {
+            var content = '';
+            content += '<th>' + 'Rank' + '</th>';
+            content += '<th>' + 'Sponsor Company Name' + '</th>';
+            content += '<th>' + 'Number of Sponsorship' + '</th>';
+            content += '<th>' + 'Average Salary' + '</th>';
+            snapshot.forEach(function (data) {
+                var val = data.val();
+                content += '<tr>';
+                content += '<td>' + val.rank + '</td>';
+                content += '<td>' + val.sponsor + '</td>';
+                content += '<td>' + val.count + '</td>';
+                content += '<td>' + val.salary + '</td>';
+                content += '</tr>';
+            });
+            // $('#ex-table').append(content);
+            document.getElementById('ex-table').innerHTML = content;
+        }
+    }
+
+    function clickChangeButton(selectedObject) {
+        let newTitle = selectedObject.options[selectedObject.selectedIndex].text;
+        changeTitle(newTitle);
+        FetchAllData();
+    }
+
+    function changeTitle(newTitle) {
+        newTitle = newTitle.toString().replaceAll("_", " ").split("]")[1];
+        console.log(newTitle);
+        document.getElementById("page-title").textContent = newTitle;
+    }
+
+    FetchAllData();
+
+</script>
+
+</body>

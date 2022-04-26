@@ -1,0 +1,109 @@
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="home.css"/>
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #01a9ac, #4a86e8);
+        }
+
+        .wrapper {
+            top: 38%;
+            box-shadow: 0 0 0 0;
+        }
+
+        .center {
+            width: 100%;
+            padding: 30px 25px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .g-signin2 > div {
+            margin: 0 auto;
+        }
+
+        .outer-main {
+            height: 130%;
+            width: 100vw;
+        }
+    </style>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <title>Home Page</title>
+</head>
+
+<body>
+<div class="outer-main">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html"><b>Home</b></a></li>
+                <li><a href="h1b.html"><b>H1B Info</b></a></li>
+                <li><a href="page.html"><b>Job List</b></a></li>
+                <li><a href="course.html"><b>Course List</b></a></li>
+                <li><a href="analysis.html"><b>H1B Analysis</b></a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="wrapper">
+        <div class="center">
+            <h1>Welcome to Job Hunting</h1>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="left" style="float: left; width: 60%">
+            <div class="main__container">
+                <div class="main__content">
+                    <h1 style="color:white">Are you looking for a Job or Internship?</h1>
+                    <h2 style="color:white"> We collected DA, DS, BA Internships in LA area</h2>
+                    <button class="main__btn" >
+                        <i class="glyphicon glyphicon-search" style="color:rgb(0, 3, 8)"></i>
+                        <a href="page.html">Find a Job Here</a>
+                    </button>
+                </div>
+                <div class="main__content1">
+                    <h1 style="color:white">Do you want to get more information about H1B?</h1>
+                    <h2 style="color:white"> We collected many company's H1B information </h2>
+                    <button class="main__btn">
+                        <i class="glyphicon glyphicon-tag" style="color:rgb(0, 3, 8)"></i>
+                        <a href="h1b.html">Get More Information</a>
+                    </button>
+                </div>
+                <div class="main__content2">
+                    <h1 style="color:white">Do you need to take some Courses for your Intern or Job?</h1>
+                    <h2 style="color:white"> We collected a lot of courses about Data Science </h2>
+                    <button class="main__btn">
+                        <i class="glyphicon glyphicon-book" style="color:rgb(0, 3, 8)"></i>
+                        <a href="course.html">Find Course here</a>
+                    </button>
+                </div>
+                <div class="main__content3">
+                    <h1 style="color:white"> Would you like to see some analysis about H1B?</h1>
+                    <h2 style="color:white"> We did a data visualization about comparing H1B on different occupation for you</h2>
+                    <button class="main__btn">
+                        <i class="glyphicon glyphicon-indent-left" style="color:rgb(0, 3, 8)"></i>
+                        <a href="course.html"> Get the Result here </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="right" style="float:right; width: 40%; padding-left: 0%">
+            <div class="main__img__container">
+                <img src="images/home1.svg" alt='pic' id="main_img" width="100%"/>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+
+</html>

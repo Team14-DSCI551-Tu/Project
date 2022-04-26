@@ -1,0 +1,114 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html"><b>Home</b></a></li>
+                <li><a href="h1b.html"><b>H1B Info</b></a></li>
+                <li><a href="page.html"><b>Job List</b></a></li>
+                <li><a href="course.html"><b>Course List</b></a></li>
+                <li><a href="analysis.html"><b>H1B Analysis</b></a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <Center>Data Science Related Job List (LA) </center>
+            </div>
+            <div class="panel-body">
+                <Center>Here are the list of DS jobs in LA</center>
+            </div>
+        </div>
+    </div>
+    <section id="mysection" style="background: rgb(206, 235, 246); padding: 20px; width: 1000x; line-height: 1.7em; margin-left: 150px; margin-right: 150px;">
+        <ul id="list">
+        </ul>
+    </section>
+
+    <!--     <h2> Data Science Related Job List (LA) </h2>
+    <ul id="list">
+    </ul> -->
+
+    <title>Firebase</title>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+
+    <script id="MainScript">
+        var firebaseConfig = {
+            apiKey: "AIzaSyBbI5sXsRK3Lpun0pXZTQJOK6t87zo7fEk",
+            authDomain: "jobhunting-ff0f1.firebaseapp.com",
+            databaseURL: "https://jobhunting-ff0f1-default-rtdb.firebaseio.com",
+            projectId: "jobhunting-ff0f1",
+            storageBucket: "jobhunting-ff0f1.appspot.com",
+            messagingSenderId: "901359814527",
+            appId: "1:901359814527:web:f55f4bec271dd7862bbc4a"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var stdNo = 0;
+
+        function addItemToList(title, company, date, jobDesc, location, rating) {
+            var ul = document.getElementById('list');
+            var header = document.createElement('h4');
+            //var _title = document.createElement('li');
+            //var _company = document.createElement('li');
+            var _date = document.createElement('li');
+            var _jobDesc = document.createElement('li');
+            var _location = document.createElement('li');
+            var _rating = document.createElement('li');
+
+            //header.innerHTML = 'Data Related Job - ' + (++stdNo);
+            header.innerHTML = 'Job ' + (++stdNo) + ': ' + company + ' - ' + title;
+            //_title.innerHTML = 'Job Title: ' + title;
+            //_company.innerHTML = 'CompanyName: ' + company;
+            _date.innerHTML = 'Date: ' + date;
+            _jobDesc.innerHTML = 'Job Description: ' + jobDesc;
+            _location.innerHTML = 'Location: ' + location;
+            _rating.innerHTML = 'Rating: ' + rating;
+
+            ul.appendChild(header);
+            //ul.appendChild(_title);
+            //ul.appendChild(_company);
+            ul.appendChild(_date);
+            ul.appendChild(_jobDesc);
+            ul.appendChild(_location);
+            ul.appendChild(_rating);
+        }
+
+        function FetchAllData() {
+            firebase.database().ref('indeed').once('value', function (snapshot) {
+                snapshot.forEach(
+                    function (ChildSnapshot) {
+                        let title = ChildSnapshot.val().job_title;
+                        let company = ChildSnapshot.val().company;
+                        let date = ChildSnapshot.val().date;
+                        let jobDesc = ChildSnapshot.val().job_desc;
+                        let location = ChildSnapshot.val().location;
+                        let rating = ChildSnapshot.val().rating;
+                        addItemToList(title, company, date, jobDesc, location, rating)
+                    }
+
+                );
+            });
+        }
+        window.onload(FetchAllData());
+    </script>
+
+</body>
+
+</html>

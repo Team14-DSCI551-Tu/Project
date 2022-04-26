@@ -1,0 +1,61 @@
+.center h1{
+    font-size: 6rem;
+}
+.main__content h1{
+    font-size: 3rem;
+    margin-left: 7%;
+    margin-top: 5%;
+}
+.main__content h2{
+    font-size: 2rem;
+    margin-left: 7%;
+}
+.main__content1 h1{
+    font-size: 3rem;
+    margin-left: 7%;
+    margin-top: 50px;
+}
+
+.main__content1 h2{
+    font-size: 2rem;
+    margin-left: 7%;
+}
+
+.main__content2 h1{
+    font-size: 3rem;
+    margin-left: 7%;
+    margin-top: 50px;
+}
+
+.main__content2 h2{
+    font-size: 2rem;
+    margin-left: 7%;
+}
+
+.main__content3 h1{
+    font-size: 3rem;
+    margin-left: 7%;
+    margin-top: 50px;
+}
+
+.main__content3 h2{
+    font-size: 2rem;
+    margin-left: 7%;
+}
+
+.main__btn {
+    font-size: 2rem;
+    margin-left: 7%;
+    background-image: linear-gradient(to top, #62f2f7, #fe51 100%);
+    padding: 14px 32px;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    margin-top: 2rem;
+    cursor: pointer;
+    position: relative;
+    transform: all 0.35s;
+}
+.main__img__container{
+    padding-top: 9%;
+}

@@ -1,0 +1,290 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li><a href="index.html"><b>Home</b></a></li>
+            <li><a href="h1b.html"><b>H1B Info</b></a></li>
+            <li><a href="page.html"><b>Job List</b></a></li>
+            <li><a href="course.html"><b>Course List</b></a></li>
+            <li><a href="analysis.html"><b>H1B Analysis</b></a></li>
+        </ul>
+    </div>
+</nav>
+<body>
+<div class="main-wrapper">
+    <div class="panel-heading">
+        <Center id="page-title">Data Science related occupations H1B Comparison</center>
+    </div>
+    <!-- <div class="panel-body">
+        <Center>Relative occupation/Area H1B report for year 2021</center>
+    </div> -->
+    <div class="selection">
+        <!--                style="float: left; padding-right: 10%;"-->
+        <div class="select-1"> Select the first occupation:
+            <select id="s1">
+                <option value="Computer_Systems_Design_and_Related_Services">
+                    Computer Systems Design and Related Services
+                </option>
+                <option value="Software_Developers_Systems_Software">
+                    Software Developers Systems Software
+                </option>
+                <option value="Computer_and_Information_Systems_management">
+                    Computer and Information Systems management
+                </option>
+                <option value="Database_Administrators"> Database Administrators
+                </option>
+                <option value="Computer_and_Information_Research_Scientists">
+                    Computer and Information Research Scientists
+                </option>
+                <option value="Data_Warehousing_Specialists"> Data Warehousing
+                    Specialists
+                </option>
+            </select>
+        </div>
+        <!--                    -->
+
+        <div class="select-2"> Select the second occupation:
+            <select id="s2">
+                <option value="Computer_Systems_Design_and_Related_Services">
+                    Computer Systems Design and Related Services
+                </option>
+                <option value="Software_Developers_Systems_Software">
+                    Software Developers Systems Software
+                </option>
+                <option value="Computer_and_Information_Systems_management">
+                    Computer and Information Systems management
+                </option>
+                <option value="Database_Administrators"> Database Administrators
+                </option>
+                <option value="Computer_and_Information_Research_Scientists">
+                    Computer and Information Research Scientists
+                </option>
+                <option value="Data_Warehousing_Specialists"> Data Warehousing
+                    Specialists
+                </option>
+            </select>
+        </div>
+
+        <div class="button">
+            <button type="button" onclick="clickChangeButton('s1','s2')"> Compare</button>
+        </div>
+    </div>
+    <div id="container" style="width: 800px; height: 800px; margin: 0 auto"></div>
+</div>
+
+<title>Firebase</title>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+
+<script id="MainScript">
+    var firebaseConfig = {
+        apiKey: "AIzaSyBR9y26seFnr3wyCXAQuz8thlUKKJ-LHGA",
+        authDomain: "h1b-la.firebaseapp.com",
+        databaseURL: "https://h1b-la-default-rtdb.firebaseio.com",
+        projectId: "h1b-la",
+        storageBucket: "h1b-la.appspot.com",
+        messagingSenderId: "1089185357986",
+        appId: "1:1089185357986:web:0681d06e0e4c446bd0f7fb",
+        measurementId: "G-MJXY32237R"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    let data1 = [];
+    let data2 = [];
+    let se = [];
+    let flag1 = false;
+    let flag2 = false;
+    let name1 = {}
+    var dic = new Array();
+
+
+    //数据处理
+    // series: [{
+    //     name: 'Projects',
+    //     data: [{"name":"Point 1", "x":1,"y":2}, {"name":"Point 2", "x":4,"y":5}]
+    // }]
+    function getdata(input) { // now is the raw version
+        let write = new Array();
+        firebase.database().ref(input).once('value', function (snapshot) {
+            snapshot_ = snapshot;
+            if (snapshot.exists()) {
+                snapshot.forEach((data) => {
+                    let val = data.val();
+                    // write.push([parseInt(val.count.replaceAll(",", "")), parseInt(val.salary)]);
+                    write.push([11, 20]);
+                    write.push([12, 250]);
+                });
+            }
+        }).then()
+
+        write.push([10, 20]);
+        write.push([10.2, 250]);
+
+
+        return write;
+    }
+
+    function gaiqianmian(a, b, input1, input2) {
+        var name1 = document.getElementById(a).value;
+        var name2 = document.getElementById(b).value;
+        var wrap1 = {name: name1.toString().replaceAll("_", " "), color: 'rgba(223, 83, 83, .5)'};
+        var wrap2 = {name: name2.toString().replaceAll("_", " "), color: 'rgba(119, 152, 191, .5)'};
+
+        let write = new Array();
+        firebase.database().ref(input1).once('value', function (snapshot) {
+            snapshot_ = snapshot;
+            if (snapshot.exists()) {
+                snapshot.forEach((data) => {
+                    let val = data.val();
+                    if (parseInt(val.count)<15000 && parseInt(val.salary)<300000){
+                        temp = {"name":val.sponsor, "x":val.count, "y": val.salary};
+                        write.push(temp)
+                            //write.push([parseInt(val.count), parseInt(val.salary)]);
+                        // temp = val.count + "+" + val.salary.toString();
+                        // dic[temp] = val.sponsor
+                    }
+                    //storeName1.(val.count.replaceAll(",", "") + "+" + val.salary.toString())= val.sponsor;
+                });
+            }
+            wrap1.data = write;
+        }).then(() => {
+                write = [];
+                firebase.database().ref(input2).once('value', function (snapshot) {
+                    snapshot_ = snapshot;
+                    if (snapshot.exists()) {
+                        snapshot.forEach((data) => {
+                            let val = data.val();
+                            if (parseInt(val.count)<15000 && parseInt(val.salary)<300000){
+                                temp = {"name":val.sponsor, "x":val.count, "y": val.salary};
+                                write.push(temp)
+                            }
+
+                        });
+                    }
+                    wrap2.data = write;
+                }).then(() => {
+                    se = [];
+                    se.push(wrap1, wrap2);
+                    console.log(se)
+                    chartIt(se)
+                })
+            }
+        )
+    }
+
+    function clickChangeButton(a, b) {
+        var input1 = document.getElementById(a).value;
+        var input2 = document.getElementById(b).value;
+        gaiqianmian(a, b, input1, input2);
+        // data1 = getdata(input1)
+        // data2 = getdata(input2)
+        // while (!flag1  !flag2){
+        //     var name1 = document.getElementById(a).value;
+        //     var name2 = document.getElementById(b).value;
+        //     var wrap1 = {name: name1.toString().replaceAll("_", " "), color: 'rgba(223, 83, 83, .5)', data: data1}
+        //     var wrap2 = {name: name2.toString().replaceAll("_", " "), color: 'rgba(119, 152, 191, .5)', data: data2}
+        //     se = [];
+        //     se.push(wrap1, wrap2);
+        //     chartIt(se)
+        // }
+    }
+
+    clickChangeButton('s1', 's2')
+
+    function chartIt(sel) {
+        Highcharts.chart('container', {
+            chart: {
+                type: 'scatter',
+                zoomType: 'xy'
+            },
+            title: {
+                text: 'Occupations Comparison of the year 2021'
+            },
+            // subtitle: {
+            //     text: 'Source: Heinz  2003'
+            // },
+            xAxis: {
+                title: {
+                    enabled: true,
+                    text: 'Number of H1B Sponsored'
+                },
+                startOnTick: true,
+                endOnTick: true,
+                showLastLabel: true
+            },
+            yAxis: {
+                title: {
+                    text: 'Average Salary (USD)'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                verticalAlign: 'top',
+                x: 100,
+                y: 70,
+                floating: true,
+                backgroundColor: Highcharts.defaultOptions.chart.backgroundColor,
+                borderWidth: 1
+            },
+            plotOptions: {
+                scatter: {
+                    marker: {
+                        radius: 5,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                lineColor: 'rgb(100,100,100)'
+                            }
+                        }
+                    },
+                    states: {
+                        hover: {
+                            marker: {
+                                enabled: false
+                            }
+                        }
+                    },
+                    tooltip: {
+                        //headerFormat: '<b>{series.name}</b><br>',
+                        // headerFormat: dic['{point.x}+{point.y}'],
+                        headerFormat: '',
+                        pointFormat: 'Company: <b>{point.name}</b><br/>H1B Sponsored: <b>{point.x}</b><br/>Ave Salary: <b>{point.y}</b>'
+                    }
+                }
+            },
+            series: sel
+        });
+    }
+
+
+</script>
+
+
+</body>
+
+
+</html>
+
+
+<!--tooltip: {-->
+<!--headerFormat: '<b>{series.name}</b><br>',-->
+<!--//pointFormat: '{point.x} cm, {point.y} kg'-->
+<!--pointFormat: 'Name: <b>{point.name}</b><br/>Salary: <b>{point.y}</b><br/>H1B count <b>{point.x}</b>',-->
+<!--}-->
